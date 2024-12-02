@@ -112,6 +112,6 @@ This project is licensed under the **MIT License**. You are free to use, modify,
 
 ## 🛡️ Support  
 
-Encounter an issue or have questions? Open an issue in the repository or reach out via email: `youremail@example.com`.  
+Encounter an issue or have questions? Open an issue in the repository or reach out via creating an issue.  
 
 Let's build the future of local AI together! 🌟  
