@@ -33,6 +33,7 @@ install_python_packages() {
     sleep 1
     for package in "${packages[@]}"; do
         echo -e "\033[1;33m[+] Installing ${package}...\033[0m"
+        spin=1
         show_spinner "Installing ${package}"
         pip install $package > /dev/null 2>&1
         spin=0
@@ -51,6 +52,7 @@ sleep 1
 # Step 2: Install Ollama (if not already installed)
 if ! command -v ollama &> /dev/null; then
     echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
+    spin=1
     show_spinner "Installing Ollama"
     curl -fsSL https://ollama.com/install.sh | bash
 else
@@ -62,6 +64,7 @@ sleep 1
 
 # Step 3: Download the llama3.2:1b model
 echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
+spin=1
 show_spinner "Downloading llama3.2:1b"
 ollama pull llama3.2:1b
 spin=0
@@ -84,8 +87,12 @@ sleep 1
 
 # Step 6: Download the source code for mygpt.py from GitHub
 echo -e "\033[1;33m[*] Downloading source code for mygpt.py...\033[0m"
-REPO_URL="https://github.com/iamMD01/MyGPT/blob/main/mygpt.py"  # Replace with actual repository URL
+REPO_URL="https://raw.githubusercontent.com/iamMD01/MyGPT/main/mygpt.py"  # Corrected to raw URL for proper download
 curl -fsSL $REPO_URL -o $HOME/MyGPT/mygpt.py
+if [ $? -ne 0 ]; then
+    echo -e "\033[1;31m[ERROR] Failed to download mygpt.py. Exiting...\033[0m"
+    exit 1
+fi
 echo -e "\033[1;32m[✓] Source code downloaded for mygpt.py.\033[0m"
 sleep 1
 
@@ -106,3 +113,10 @@ source $HOME/.bashrc
 
 # Final message
 echo -e "\033[1;32m🎉 Setup complete! You can now run 'mygpt' from your terminal.\033[0m"
+
+# Step 9: Go back to home directory and run mygpt
+cd $HOME
+echo -e "\033[1;33m[*] Returning to home directory...\033[0m"
+sleep 1
+echo -e "\033[1;33m[*] Running 'mygpt'...\033[0m"
+mygpt
