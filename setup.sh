@@ -112,8 +112,9 @@ else
 fi
 
 # Step 9: Go back to home directory and run mygpt
-cd $HOME
+
 echo -e "\033[1;33m[*] Returning to home directory...\033[0m"
+cd $HOME
 sleep 1
 
 echo -e "\033[1;33m[*] Sourcing bashrc...\033[0m"
