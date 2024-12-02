@@ -40,16 +40,6 @@ install_python_packages() {
     done
 }
 
-# Function to download files with progress and size display
-download_with_progress() {
-    URL=$1
-    DEST=$2
-    echo -e "\033[1;33m[*] Downloading file from $URL...\033[0m"
-    # Use curl to download the file and show progress
-    curl -L $URL --progress-bar --output $DEST
-    echo -e "\033[1;32m[✓] Download completed.\033[0m"
-}
-
 # Start of script
 show_header
 
@@ -94,8 +84,9 @@ sleep 1
 
 # Step 6: Download the source code for mygpt.py from GitHub
 echo -e "\033[1;33m[*] Downloading source code for mygpt.py...\033[0m"
-REPO_URL="https://raw.githubusercontent.com/iamMD01/MyGPT/main/mygpt.py"  # Correct raw GitHub URL
-download_with_progress $REPO_URL "$HOME/MyGPT/mygpt.py"
+REPO_URL="https://github.com/iamMD01/MyGPT/blob/main/mygpt.py"  # Replace with actual repository URL
+curl -fsSL $REPO_URL -o $HOME/MyGPT/mygpt.py
+echo -e "\033[1;32m[✓] Source code downloaded for mygpt.py.\033[0m"
 sleep 1
 
 # Step 7: Get the absolute path of the Python script
