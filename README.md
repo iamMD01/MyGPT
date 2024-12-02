@@ -31,7 +31,13 @@ Ensure your system meets the following requirements:
     git clone https://github.com/iamMD01/MyGPT.git && cd MyGPT &&   chmod +x setup.sh && ./setup.sh && source ~/.bashrc
 
    ```  
+This single line does the following:
 
+- Clones the repository: git clone https://github.com/iamMD01/MyGPT.git
+- Changes to the project directory: cd MyGPT
+- Makes the setup.sh script executable: chmod +x setup.sh
+- Runs the installation script: ./setup.sh
+- Sources the .bashrc to update the environment: source ~/.bashrc
 
 
 ---
