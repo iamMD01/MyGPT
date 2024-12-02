@@ -28,8 +28,8 @@ Ensure your system meets the following requirements:
 1. **Clone the Repository**  
 
    ```bash  
-   git clone https://github.com/your-username/your-repository.git  
-   cd your-repository  
+   git clone https://github.com/iamMD01/MyGPT.git
+   cd MyGPT
    ```  
 
 2. **Run the Installation Script**  
