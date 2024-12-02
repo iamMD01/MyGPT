@@ -55,7 +55,6 @@ show_header
 
 # Step 1: Install python3.12-venv if not already installed
 echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
-sudo apt-get update
 sudo apt-get install -y python3.12-venv
 echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
 sleep 1
