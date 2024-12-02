@@ -25,7 +25,7 @@ Ensure your system meets the following requirements:
 
 ### Setup Instructions  
 
-1. **Copy that line**  
+1. **Copy this line**  
 
    ```bash  
     git clone https://github.com/iamMD01/MyGPT.git && cd MyGPT &&   chmod +x setup.sh && ./setup.sh && source ~/.bashrc
