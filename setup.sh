@@ -115,11 +115,12 @@ fi
 cd $HOME
 echo -e "\033[1;33m[*] Returning to home directory...\033[0m"
 sleep 1
-echo -e "\033[1;33m[*] Running 'mygpt'...\033[0m"
-mygpt
+
 echo -e "\033[1;33m[*] Sourcing bashrc...\033[0m"
 source $HOME/.bashrc
 
 # Final message
 echo -e "\033[1;32m🎉 Setup complete!.\033[0m"
 
+echo -e "\033[1;33m[*] Running 'mygpt'...\033[0m"
+mygpt
