@@ -149,7 +149,7 @@ def test_ollama_speed(model_name='llama3.2:1b', prompt="Tell me about the world"
 
 def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
     """Interactive chat with the specified Ollama model"""
-    print(f"{BLUE}🤖 Lumen - Ollama Terminal Chat{RESET}")
+    print(f"{BLUE}🤖 MyGPT - Ollama Terminal Chat{RESET}")
     print(f"Chatting with model: {ORANGE}{model_name}{RESET}")
     print("Type 'exit' to quit, 'models' to list available models, 'setmodel <model_name>' to change model, 'testmodel' to run speed test")
     
@@ -189,7 +189,7 @@ def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
                 )
                 
                 # Stop the spinner and show the response
-                spinner.stop(f"{ORANGE}🤖 Lumen:{RESET} {response['message']['content']}")
+                spinner.stop(f"{ORANGE}🤖 MyGPT:{RESET} {response['message']['content']}")
                 
             except Exception as e:
                 spinner.stop(f"❌ Error: {str(e)}")
@@ -199,7 +199,7 @@ def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
 
 def main():
     """Main function to parse arguments and start the chat"""
-    parser = argparse.ArgumentParser(description='Lumen - Ollama Terminal Chat')
+    parser = argparse.ArgumentParser(description='MyGPT - Ollama Terminal Chat')
     parser.add_argument('-m', '--model', 
                         default='llama3.2:1b', 
                         help='Specify the Ollama model to use')
