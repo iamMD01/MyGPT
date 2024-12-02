@@ -25,34 +25,14 @@ Ensure your system meets the following requirements:
 
 ### Setup Instructions  
 
-1. **Clone the Repository**  
+1. **Copy that line**  
 
    ```bash  
-   git clone https://github.com/iamMD01/MyGPT.git
-   cd MyGPT
+    git clone https://github.com/iamMD01/MyGPT.git && cd MyGPT &&   chmod +x setup.sh && ./setup.sh && source ~/.bashrc
+
    ```  
 
-2. **Run the Installation Script**  
 
-   The `setup.sh` script automates the setup process. Make it executable and run it:  
-
-   ```bash  
-   chmod +x setup.sh  
-   ./setup.sh  
-   ```  
-
-   The script will:  
-   - Set up a Python virtual environment and install required packages.  
-   - Download the `llama3.2:1b` model.  
-   - Add an alias `mygpt` for easy access.  
-
-3. **Source the Updated Bash Configuration**  
-
-   If the script doesn’t source your `~/.bashrc` automatically, run:  
-
-   ```bash  
-   source ~/.bashrc  
-   ```  
 
 ---
 
