@@ -110,6 +110,13 @@ if ! grep -Fxq "$ALIAS_COMMAND" $HOME/.bashrc; then
 else
     echo -e "\033[1;32m[✓] Alias 'mygpt' already exists.\033[0m"
 fi
+
+# Step 9: Go back to home directory and run mygpt
+cd $HOME
+echo -e "\033[1;33m[*] Returning to home directory...\033[0m"
+sleep 1
+echo -e "\033[1;33m[*] Running 'mygpt'...\033[0m"
+mygpt
 echo -e "\033[1;33m[*] Sourcing bashrc...\033[0m"
 source $HOME/.bashrc
 
