@@ -120,7 +120,5 @@ echo -e "\033[1;33m[*] Sourcing bashrc...\033[0m"
 source $HOME/.bashrc
 
 # Final message
-echo -e "\033[1;32m🎉 Setup complete!.\033[0m"
+echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it type "mygpt".\033[0m"
 
-echo -e "\033[1;33m[*] Running 'mygpt'...\033[0m"
-mygpt
