@@ -84,7 +84,7 @@ sleep 1
 
 # Step 6: Download the source code for mygpt.py from GitHub
 echo -e "\033[1;33m[*] Downloading source code for mygpt.py...\033[0m"
-REPO_URL="https://github.com/your-username/your-repository/raw/main/mygpt.py"  # Replace with actual repository URL
+REPO_URL="https://github.com/iamMD01/MyGPT/blob/main/mygpt.py"  # Replace with actual repository URL
 curl -fsSL $REPO_URL -o $HOME/MyGPT/mygpt.py
 echo -e "\033[1;32m[✓] Source code downloaded for mygpt.py.\033[0m"
 sleep 1
