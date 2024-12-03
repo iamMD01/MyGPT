@@ -91,8 +91,8 @@ delete_mygpt() {
     if command -v ollama &> /dev/null; then
         # Remove Ollama CLI
         echo -e "\033[1;33m[*] Removing Ollama CLI...\033[0m"
-        rm -rf $HOME/.ollama
-        rm -rf /usr/local/bin/ollama
+        sudo rm -rf $HOME/.ollama
+        sudo rm -rf /usr/local/bin/ollama
         echo -e "\033[1;32m[✓] Ollama CLI removed.\033[0m"
     else
         echo -e "\033[1;32m[✓] Ollama CLI not installed.\033[0m"
