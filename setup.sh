@@ -43,3 +43,12 @@ download_with_progress() {
     curl -L $URL --progress-bar --output $DEST
     echo -e "\033[1;32m[✓] Download completed.\033[0m"
 }
+# Function to delete MyGPT installation
+delete_mygpt() {
+    echo -e "\033[1;31m[*] Deleting MyGPT...\033[0m"
+    rm -rf $HOME/MyGPT
+    sed -i "/alias mygpt=/d" $HOME/.bashrc
+    sed -i "/alias delete_mygpt=/d" $HOME/.bashrc
+    source $HOME/.bashrc
+    echo -e "\033[1;31m[✓] MyGPT has been removed from your system.\033[0m"
+}
