@@ -106,3 +106,10 @@ source $HOME/.bashrc
 
 # Final message
 echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it, type 'mygpt'. To delete it, type 'delete mygpt'.\033[0m"
+
+# Main script logic
+if [ "$1" == "delete" ]; then
+    delete_mygpt
+else
+    setup_mygpt
+fi
