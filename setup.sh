@@ -76,3 +76,7 @@ show_spinner "Downloading llama3.2:1b"
 ollama pull llama3.2:1b
 spin=0
 echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
+# Step 5: Create MyGPT folder
+echo -e "\033[1;33m[*] Creating MyGPT folder...\033[0m"
+mkdir -p $HOME/MyGPT
+echo -e "\033[1;32m[✓] MyGPT folder created.\033[0m"
