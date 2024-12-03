@@ -17,3 +17,21 @@ show_spinner() {
         done
     done
 }
+# Function to install python packages with a nice progress bar
+install_python_packages() {
+    packages=(
+        "matplotlib"
+        "termcolor"
+        "rich"
+        "ollama"
+    )
+    echo -e "\033[1;33m[*] Installing Python packages: \033[1;37m${packages[*]}\033[0m"
+    sleep 1
+    for package in "${packages[@]}"; do
+        echo -e "\033[1;33m[+] Installing ${package}...\033[0m"
+        show_spinner "Installing ${package}"
+        pip install $package > /dev/null 2>&1
+        spin=0
+        echo -e "\033[1;32m[✓] ${package} installed successfully.\033[0m"
+    done
+}
