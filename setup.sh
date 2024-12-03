@@ -143,3 +143,5 @@ if [ "$1" == "delete" ]; then
 else
     setup_mygpt
 fi
+
+# TODO Add Spinner animation properly
