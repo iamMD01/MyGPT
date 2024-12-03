@@ -70,3 +70,9 @@ else
     echo -e "\033[1;32m[✓] Ollama CLI is already installed.\033[0m"
 fi
 spin=0
+# Step 4: Download the llama3.2:1b model
+echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
+show_spinner "Downloading llama3.2:1b"
+ollama pull llama3.2:1b
+spin=0
+echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
