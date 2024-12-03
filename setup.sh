@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Global spinner variable
+spin=1
+
 # Function to display a colorful header with animations
 show_header() {
     echo -e "\033[1;34m==============================================\033[0m"
@@ -8,17 +11,37 @@ show_header() {
     sleep 1
 }
 
-# Function to display a loading spinner
+# Enhanced function to display a loading spinner with custom message
 show_spinner() {
-    spinner=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
-    while [ $spin -eq 1 ]
-    do
-        for i in "${spinner[@]}"
+    local message="$1"
+    local spinner=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
+    local spin_pid=$$ # Use current process ID for unique spinner
+    
+    # Start spinner in background
+    (
+        while [ $spin -eq 1 ]
         do
-            echo -ne "\r\033[1;32m${i} $1 \033[0m"
-            sleep 0.1
+            for i in "${spinner[@]}"
+            do
+                echo -ne "\r\033[1;32m${i} $message \033[0m"
+                sleep 0.1
+            done
         done
-    done
+    ) &
+    
+    # Store background process ID
+    SPIN_PID=$!
+}
+
+# Function to stop spinner
+stop_spinner() {
+    spin=0
+    # Wait a moment to ensure spinner stops
+    sleep 0.5
+    # Kill spinner process if it exists
+    kill $SPIN_PID 2>/dev/null
+    # Clear spinner line
+    echo -ne "\r\033[K"
 }
 
 # Function to install python packages with a nice progress bar
@@ -30,31 +53,37 @@ install_python_packages() {
         "ollama"
     )
     echo -e "\033[1;33m[*] Installing Python packages: \033[0m"
-    sleep 1
+    spin=1
+    show_spinner "Installing Python packages..."
     for package in "${packages[@]}"; do
-        show_spinner "Installing Python packages..."
         pip install $package > /dev/null 2>&1
-        spin=0
     done
+    stop_spinner
     echo -e "\033[1;32m[✓] Python packages installed successfully.\033[0m"
 }
 
-# Function to download files with progress
+# Function to download files with progress and spinner
 download_with_progress() {
-    URL=$1
-    DEST=$2
+    local URL=$1
+    local DEST=$2
     echo -e "\033[1;33m[*] Downloading file from $URL...\033[0m"
+    spin=1
+    show_spinner "Downloading file..."
     curl -L $URL --progress-bar --output $DEST
+    stop_spinner
     echo -e "\033[1;32m[✓] Download completed.\033[0m"
 }
 
 # Function to delete MyGPT installation
 delete_mygpt() {
     echo -e "\033[1;31m[*] Deleting MyGPT...\033[0m"
+    spin=1
+    show_spinner "Deleting MyGPT installation..."
     rm -rf $HOME/MyGPT
     sed -i "/alias mygpt=/d" $HOME/.bashrc
     sed -i "/alias delete_mygpt=/d" $HOME/.bashrc
     source $HOME/.bashrc
+    stop_spinner
     echo -e "\033[1;32m[✓] MyGPT deleted successfully.\033[0m"
 }
 
@@ -64,7 +93,10 @@ setup_mygpt() {
 
     # Step 1: Install python3.12-venv
     echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
+    spin=1
+    show_spinner "Installing python3.12-venv..."
     sudo apt-get install -y python3.12-venv
+    stop_spinner
     echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
     sleep 1
 
@@ -76,33 +108,41 @@ setup_mygpt() {
     # Step 3: Install Ollama CLI
     if ! command -v ollama &> /dev/null; then
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
-        show_spinner "Installing Ollama"
+        spin=1
+        show_spinner "Installing Ollama CLI..."
         curl -fsSL https://ollama.com/install.sh | bash
+        stop_spinner
     else
         echo -e "\033[1;32m[✓] Ollama CLI is already installed.\033[0m"
     fi
-    spin=0
     echo -e "\033[1;32m[✓] Ollama installation complete.\033[0m"
     sleep 1
 
     # Step 4: Download the llama3.2:1b model
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
-    show_spinner "Downloading llama3.2:1b"
+    spin=1
+    show_spinner "Downloading llama3.2:1b model..."
     ollama pull llama3.2:1b
-    spin=0
+    stop_spinner
     echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
     sleep 1
 
     # Step 5: Create MyGPT folder
     echo -e "\033[1;33m[*] Creating MyGPT folder...\033[0m"
+    spin=1
+    show_spinner "Creating MyGPT folder..."
     mkdir -p $HOME/MyGPT
+    stop_spinner
     echo -e "\033[1;32m[✓] MyGPT folder created.\033[0m"
     sleep 1
 
     # Step 6: Set up Python Virtual Environment
     echo -e "\033[1;33m[*] Setting up Python virtual environment...\033[0m"
+    spin=1
+    show_spinner "Creating virtual environment..."
     python3.12 -m venv $HOME/MyGPT/.venv
     source $HOME/MyGPT/.venv/bin/activate
+    stop_spinner
     install_python_packages
     echo -e "\033[1;32m[✓] Python virtual environment set up and packages installed.\033[0m"
     sleep 1
@@ -115,6 +155,8 @@ setup_mygpt() {
 
     # Step 8: Add aliases to bashrc
     echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
+    spin=1
+    show_spinner "Configuring bash aliases..."
     PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
     ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
     ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $HOME/MyGPT/setup.sh delete'"
@@ -128,10 +170,8 @@ setup_mygpt() {
     fi
 
     source $HOME/.bashrc
+    stop_spinner
     echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
-
-    # Step 9: Source bashrc
-    source $HOME/.bashrc
 
     # Final message
     echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it, type 'mygpt'. To delete it, type 'delete mygpt'.\033[0m"
@@ -143,5 +183,3 @@ if [ "$1" == "delete" ]; then
 else
     setup_mygpt
 fi
-
-# TODO Add Spinner animation properly
