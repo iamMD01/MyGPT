@@ -29,14 +29,16 @@ install_python_packages() {
         "rich"
         "ollama"
     )
-    echo -e "\033[1;33m[*] Installing Python packages: \033[0m"
+    echo -e "\033[1;33m[*] Installing Python packages: \033[1;37m...\033[0m"
     sleep 1
     for package in "${packages[@]}"; do
-        show_spinner "Installing Python packages..."
+        echo -e "\033[1;33m[+] Installing ${package}...\033[0m"
+        spin=1
+        show_spinner "Installing ${package}"
         pip install $package > /dev/null 2>&1
         spin=0
+        echo -e "\033[1;32m[✓] ${package} installed successfully.\033[0m"
     done
-    echo -e "\033[1;32m[✓] Python packages installed successfully.\033[0m"
 }
 
 # Function to download files with progress
@@ -56,24 +58,6 @@ delete_mygpt() {
     sed -i "/alias delete_mygpt=/d" $HOME/.bashrc
     source $HOME/.bashrc
     echo -e "\033[1;32m[✓] MyGPT deleted successfully.\033[0m"
-
-    # # Delete Ollama and models
-    # echo -e "\033[1;31m[*] Deleting Ollama and its models...\033[0m"
-    # if command -v ollama &> /dev/null; then
-    #     # Remove Ollama CLI
-    #     echo -e "\033[1;33m[*] Removing Ollama CLI...\033[0m"
-    #     rm -rf $HOME/.ollama
-    #     rm -rf /usr/local/bin/ollama
-    #     echo -e "\033[1;32m[✓] Ollama CLI removed.\033[0m"
-    # else
-    #     echo -e "\033[1;32m[✓] Ollama CLI not installed.\033[0m"
-    # fi
-
-    # # Delete any models (if any exist)
-    # echo -e "\033[1;33m[*] Removing Ollama models...\033[0m"
-    # rm -rf $HOME/.ollama/models
-
-    # echo -e "\033[1;31m[✓] MyGPT and Ollama have been removed from your system.\033[0m"
 }
 
 # Main setup function
@@ -94,6 +78,7 @@ setup_mygpt() {
     # Step 3: Install Ollama CLI
     if ! command -v ollama &> /dev/null; then
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
+        spin=1
         show_spinner "Installing Ollama"
         curl -fsSL https://ollama.com/install.sh | bash
     else
@@ -105,6 +90,7 @@ setup_mygpt() {
 
     # Step 4: Download the llama3.2:1b model
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
+    spin=1
     show_spinner "Downloading llama3.2:1b"
     ollama pull llama3.2:1b
     spin=0
@@ -132,37 +118,25 @@ setup_mygpt() {
     sleep 1
 
     # Step 8: Add aliases to bashrc
-    # Added global aliases for 'mygpt' and 'delete_mygpt' to .bashrc, 
-    # ensuring they work from any directory. The 'delete_mygpt' alias 
-    # now points to the full path of the setup script for easy execution.
+    echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
+    PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
+    ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
+    ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $HOME/MyGPT/setup.sh delete'"
 
-echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
-PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
-ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
-ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $HOME/MyGPT/setup.sh delete'"
+    if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
+        echo $ALIAS_MYGPT >> $HOME/.bashrc
+    fi
 
-# Check if the aliases are already in .bashrc
-if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
-    echo $ALIAS_MYGPT >> $HOME/.bashrc
-fi
+    if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
+        echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
+    fi
 
-if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
-    echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
-fi
-
-# Ensure the changes take effect by sourcing .bashrc
-source $HOME/.bashrc
-
-echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
-
-
-    # Step 9: Source bashrc
     source $HOME/.bashrc
+
+    echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
 
     # Final message
     echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it, type 'mygpt'. To delete it, type 'delete mygpt'.\033[0m"
-
-    
 }
 
 # Main script logic
