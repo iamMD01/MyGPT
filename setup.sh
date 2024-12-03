@@ -90,3 +90,14 @@ echo -e "\033[1;32m[✓] Python virtual environment set up and packages installe
 echo -e "\033[1;33m[*] Downloading source code for mygpt.py...\033[0m"
 REPO_URL="https://raw.githubusercontent.com/iamMD01/MyGPT/main/mygpt.py"
 download_with_progress $REPO_URL "$HOME/MyGPT/mygpt.py"
+# Step 8: Add aliases to bashrc
+echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
+PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
+ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
+ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $0 delete'"
+if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
+    echo $ALIAS_MYGPT >> $HOME/.bashrc
+fi
+if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
+    echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
+fi
