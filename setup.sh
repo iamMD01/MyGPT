@@ -133,6 +133,10 @@ setup_mygpt() {
     sleep 1
 
     # Step 8: Add aliases to bashrc
+    # Added global aliases for 'mygpt' and 'delete_mygpt' to .bashrc, 
+    # ensuring they work from any directory. The 'delete_mygpt' alias 
+    # now points to the full path of the setup script for easy execution.
+
 echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
 PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
 ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
