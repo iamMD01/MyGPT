@@ -127,10 +127,8 @@ setup_mygpt() {
     # Step 3: Install Ollama CLI
     if ! command -v ollama &> /dev/null; then
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
-        spin=1
         show_spinner "Installing Ollama CLI..."
         curl -fsSL https://ollama.com/install.sh | bash
-        stop_spinner
     else
         echo -e "\033[1;32m[✓] Ollama CLI is already installed.\033[0m"
     fi
