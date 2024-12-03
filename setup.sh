@@ -101,3 +101,5 @@ fi
 if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
     echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
 fi
+# Step 9: Source bashrc
+source $HOME/.bashrc
