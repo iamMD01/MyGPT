@@ -120,10 +120,10 @@ setup_mygpt() {
 
     # Step 4: Download the llama3.2:1b model
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
-    spin=1
+    
     show_spinner "Downloading llama3.2:1b model..."
     ollama pull llama3.2:1b
-    stop_spinner
+    
     echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
     sleep 1
 
