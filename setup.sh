@@ -52,3 +52,8 @@ delete_mygpt() {
     source $HOME/.bashrc
     echo -e "\033[1;31m[✓] MyGPT has been removed from your system.\033[0m"
 }
+# Step 1: Install python3.12-venv
+echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
+sudo apt-get install -y python3.12-venv
+echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
+sleep 1
