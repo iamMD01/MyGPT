@@ -56,6 +56,7 @@ delete_mygpt() {
     sed -i "/alias mygpt=/d" $HOME/.bashrc
     sed -i "/alias delete_mygpt=/d" $HOME/.bashrc
     source $HOME/.bashrc
+    echo -e "\033[1;32m[✓] MyGPT deleted successfully.\033[0m"
 
     # # Delete Ollama and models
     # echo -e "\033[1;31m[*] Deleting Ollama and its models...\033[0m"
@@ -132,17 +133,25 @@ setup_mygpt() {
     sleep 1
 
     # Step 8: Add aliases to bashrc
-    echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
-    PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
-    ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
-    ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $0 delete'"
-    if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
-        echo $ALIAS_MYGPT >> $HOME/.bashrc
-    fi
-    if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
-        echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
-    fi
-    echo -e "\033[1;32m[✓] Done.\033[0m"
+echo -e "\033[1;33m[*] Adding aliases to bashrc...\033[0m"
+PYTHON_PATH="$HOME/MyGPT/.venv/bin/python $HOME/MyGPT/mygpt.py"
+ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
+ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $HOME/MyGPT/setup.sh delete'"
+
+# Check if the aliases are already in .bashrc
+if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
+    echo $ALIAS_MYGPT >> $HOME/.bashrc
+fi
+
+if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
+    echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
+fi
+
+# Ensure the changes take effect by sourcing .bashrc
+source $HOME/.bashrc
+
+echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
+
 
     # Step 9: Source bashrc
     source $HOME/.bashrc
