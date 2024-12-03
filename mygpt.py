@@ -153,22 +153,22 @@ def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
     print(f"Chatting with model: {ORANGE}{model_name}{RESET}")
     print("""
     Welcome! Please choose an option:
-    ---------------------------------------
-    | Command              | Description                        |
-    |----------------------|------------------------------------|
-    | exit                 | Quit the application               |
-    | models               | List available models              |
-    | setmodel <model_name>| Change the model to <model_name>   |
-    | testmodel            | Run a speed test on the current model |
-    ---------------------------------------
+    -----------------------------------------------------------------
+    | Command              | Description                            |
+    |----------------------|----------------------------------------|
+    | exit                 | Quit the application                   |
+    | models               | List available models                  |
+    | setmodel <model_name>| Change the model to <model_name>       |
+    | testmodel            | Run a speed test on the current model  |
+    -----------------------------------------------------------------
     """)
-    
+
     
     context = []  # Maintain conversation context
     
     while True:
         try:
-            user_input = input(f"{GREEN}🙂 You:{RESET} ")
+            user_input = input(f"{GREEN} 🙂 You:{RESET} ")
             
             # Special commands
             if user_input.lower() == 'exit':
@@ -200,7 +200,7 @@ def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
                 )
                 
                 # Stop the spinner and show the response
-                spinner.stop(f"{ORANGE}🤖 MyGPT:{RESET} {response['message']['content']}")
+                spinner.stop(f"{ORANGE} 🤖 MyGPT:{RESET} {response['message']['content']}")
                 
             except Exception as e:
                 spinner.stop(f"❌ Error: {str(e)}")
