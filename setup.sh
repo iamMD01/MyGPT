@@ -35,3 +35,11 @@ install_python_packages() {
         echo -e "\033[1;32m[✓] ${package} installed successfully.\033[0m"
     done
 }
+# Function to download files with progress
+download_with_progress() {
+    URL=$1
+    DEST=$2
+    echo -e "\033[1;33m[*] Downloading file from $URL...\033[0m"
+    curl -L $URL --progress-bar --output $DEST
+    echo -e "\033[1;32m[✓] Download completed.\033[0m"
+}
