@@ -11,7 +11,6 @@ show_header() {
 # Function to display a loading spinner
 show_spinner() {
     spinner=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
-    spin=1
     while [ $spin -eq 1 ]
     do
         for i in "${spinner[@]}"
@@ -20,12 +19,6 @@ show_spinner() {
             sleep 0.1
         done
     done
-}
-
-# Function to stop the spinner
-stop_spinner() {
-    spin=0
-    echo -ne "\r\033[1;32m[✓] Done.                    \033[0m\n"
 }
 
 # Function to install python packages with a nice progress bar
@@ -39,9 +32,9 @@ install_python_packages() {
     echo -e "\033[1;33m[*] Installing Python packages: \033[0m"
     sleep 1
     for package in "${packages[@]}"; do
-        show_spinner "Installing $package..."
+        show_spinner "Installing Python packages..."
         pip install $package > /dev/null 2>&1
-        stop_spinner
+        spin=0
     done
     echo -e "\033[1;32m[✓] Python packages installed successfully.\033[0m"
 }
@@ -51,9 +44,7 @@ download_with_progress() {
     URL=$1
     DEST=$2
     echo -e "\033[1;33m[*] Downloading file from $URL...\033[0m"
-    show_spinner "Downloading..."
     curl -L $URL --progress-bar --output $DEST
-    stop_spinner
     echo -e "\033[1;32m[✓] Download completed.\033[0m"
 }
 
@@ -73,9 +64,7 @@ setup_mygpt() {
 
     # Step 1: Install python3.12-venv
     echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
-    show_spinner "Installing python3.12-venv..."
     sudo apt-get install -y python3.12-venv
-    stop_spinner
     echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
     sleep 1
 
@@ -89,10 +78,10 @@ setup_mygpt() {
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
         show_spinner "Installing Ollama"
         curl -fsSL https://ollama.com/install.sh | bash
-        stop_spinner
     else
         echo -e "\033[1;32m[✓] Ollama CLI is already installed.\033[0m"
     fi
+    spin=0
     echo -e "\033[1;32m[✓] Ollama installation complete.\033[0m"
     sleep 1
 
@@ -100,7 +89,7 @@ setup_mygpt() {
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
     show_spinner "Downloading llama3.2:1b"
     ollama pull llama3.2:1b
-    stop_spinner
+    spin=0
     echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
     sleep 1
 
