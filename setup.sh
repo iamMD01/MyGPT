@@ -29,16 +29,14 @@ install_python_packages() {
         "rich"
         "ollama"
     )
-    echo -e "\033[1;33m[*] Installing Python packages: \033[1;37m...\033[0m"
+    echo -e "\033[1;33m[*] Installing Python packages: \033[0m"
     sleep 1
     for package in "${packages[@]}"; do
-        echo -e "\033[1;33m[+] Installing ${package}...\033[0m"
-        spin=1
-        show_spinner "Installing ${package}"
+        show_spinner "Installing Python packages..."
         pip install $package > /dev/null 2>&1
         spin=0
-        echo -e "\033[1;32m[✓] ${package} installed successfully.\033[0m"
     done
+    echo -e "\033[1;32m[✓] Python packages installed successfully.\033[0m"
 }
 
 # Function to download files with progress
@@ -78,7 +76,6 @@ setup_mygpt() {
     # Step 3: Install Ollama CLI
     if ! command -v ollama &> /dev/null; then
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
-        spin=1
         show_spinner "Installing Ollama"
         curl -fsSL https://ollama.com/install.sh | bash
     else
@@ -90,7 +87,6 @@ setup_mygpt() {
 
     # Step 4: Download the llama3.2:1b model
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
-    spin=1
     show_spinner "Downloading llama3.2:1b"
     ollama pull llama3.2:1b
     spin=0
@@ -132,8 +128,10 @@ setup_mygpt() {
     fi
 
     source $HOME/.bashrc
-
     echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
+
+    # Step 9: Source bashrc
+    source $HOME/.bashrc
 
     # Final message
     echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it, type 'mygpt'. To delete it, type 'delete mygpt'.\033[0m"
