@@ -57,3 +57,7 @@ echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
 sudo apt-get install -y python3.12-venv
 echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
 sleep 1
+# Step 2: Navigate to home directory
+cd $HOME
+echo -e "\033[1;33m[*] Navigating to home directory...\033[0m"
+sleep 1
