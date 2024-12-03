@@ -80,3 +80,9 @@ echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
 echo -e "\033[1;33m[*] Creating MyGPT folder...\033[0m"
 mkdir -p $HOME/MyGPT
 echo -e "\033[1;32m[✓] MyGPT folder created.\033[0m"
+# Step 6: Set up Python Virtual Environment
+echo -e "\033[1;33m[*] Setting up Python virtual environment...\033[0m"
+python3.12 -m venv $HOME/MyGPT/.venv
+source $HOME/MyGPT/.venv/bin/activate
+install_python_packages
+echo -e "\033[1;32m[✓] Python virtual environment set up and packages installed.\033[0m"
