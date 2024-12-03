@@ -159,8 +159,3 @@ if [ "$1" == "delete" ]; then
 else
     setup_mygpt
 fi
-
-# Move to the home directory after setup
-    cd $HOME
-    echo -e "\033[1;33m[*] Navigating to Home...\033[0m"
-    sleep 1 
