@@ -11,6 +11,7 @@ show_header() {
 # Function to display a loading spinner
 show_spinner() {
     spinner=( '⠋' '⠙' '⠹' '⠸' '⠼' '⠴' '⠦' '⠧' '⠇' '⠏' )
+    spin=1
     while [ $spin -eq 1 ]
     do
         for i in "${spinner[@]}"
@@ -21,6 +22,12 @@ show_spinner() {
     done
 }
 
+# Function to stop the spinner
+stop_spinner() {
+    spin=0
+    echo -ne "\r\033[1;32m[✓] Done.                    \033[0m\n"
+}
+
 # Function to install python packages with a nice progress bar
 install_python_packages() {
     packages=(
@@ -29,14 +36,14 @@ install_python_packages() {
         "rich"
         "ollama"
     )
+    echo -e "\033[1;33m[*] Installing Python packages: \033[0m"
+    sleep 1
     for package in "${packages[@]}"; do
-        echo -e "\033[1;33m[*] Installing $package...\033[0m"
-        spin=1
-        show_spinner "Installing $package"
+        show_spinner "Installing $package..."
         pip install $package > /dev/null 2>&1
-        spin=0
-        echo -e "\033[1;32m[✓] $package installed successfully.\033[0m"
+        stop_spinner
     done
+    echo -e "\033[1;32m[✓] Python packages installed successfully.\033[0m"
 }
 
 # Function to download files with progress
@@ -44,10 +51,9 @@ download_with_progress() {
     URL=$1
     DEST=$2
     echo -e "\033[1;33m[*] Downloading file from $URL...\033[0m"
-    spin=1
-    show_spinner "Downloading file"
+    show_spinner "Downloading..."
     curl -L $URL --progress-bar --output $DEST
-    spin=0
+    stop_spinner
     echo -e "\033[1;32m[✓] Download completed.\033[0m"
 }
 
@@ -67,10 +73,9 @@ setup_mygpt() {
 
     # Step 1: Install python3.12-venv
     echo -e "\033[1;33m[*] Installing python3.12-venv package...\033[0m"
-    spin=1
-    show_spinner "Installing python3.12-venv"
-    sudo apt-get install -y python3.12-venv > /dev/null 2>&1
-    spin=0
+    show_spinner "Installing python3.12-venv..."
+    sudo apt-get install -y python3.12-venv
+    stop_spinner
     echo -e "\033[1;32m[✓] python3.12-venv package installed.\033[0m"
     sleep 1
 
@@ -82,10 +87,9 @@ setup_mygpt() {
     # Step 3: Install Ollama CLI
     if ! command -v ollama &> /dev/null; then
         echo -e "\033[1;33m[*] Installing Ollama CLI...\033[0m"
-        spin=1
         show_spinner "Installing Ollama"
         curl -fsSL https://ollama.com/install.sh | bash
-        spin=0
+        stop_spinner
     else
         echo -e "\033[1;32m[✓] Ollama CLI is already installed.\033[0m"
     fi
@@ -94,30 +98,23 @@ setup_mygpt() {
 
     # Step 4: Download the llama3.2:1b model
     echo -e "\033[1;33m[*] Downloading llama3.2:1b model...\033[0m"
-    spin=1
     show_spinner "Downloading llama3.2:1b"
-    ollama pull llama3.2:1b > /dev/null 2>&1
-    spin=0
+    ollama pull llama3.2:1b
+    stop_spinner
     echo -e "\033[1;32m[✓] Model llama3.2:1b downloaded.\033[0m"
     sleep 1
 
     # Step 5: Create MyGPT folder
     echo -e "\033[1;33m[*] Creating MyGPT folder...\033[0m"
-    spin=1
-    show_spinner "Creating MyGPT folder"
     mkdir -p $HOME/MyGPT
-    spin=0
     echo -e "\033[1;32m[✓] MyGPT folder created.\033[0m"
     sleep 1
 
     # Step 6: Set up Python Virtual Environment
     echo -e "\033[1;33m[*] Setting up Python virtual environment...\033[0m"
-    spin=1
-    show_spinner "Setting up Python virtual environment"
     python3.12 -m venv $HOME/MyGPT/.venv
     source $HOME/MyGPT/.venv/bin/activate
     install_python_packages
-    spin=0
     echo -e "\033[1;32m[✓] Python virtual environment set up and packages installed.\033[0m"
     sleep 1
 
@@ -133,8 +130,6 @@ setup_mygpt() {
     ALIAS_MYGPT="alias mygpt=\"$PYTHON_PATH\""
     ALIAS_DELETE_MYGPT="alias delete_mygpt='bash $HOME/MyGPT/setup.sh delete'"
 
-    spin=1
-    show_spinner "Adding aliases to bashrc"
     if ! grep -Fxq "$ALIAS_MYGPT" $HOME/.bashrc; then
         echo $ALIAS_MYGPT >> $HOME/.bashrc
     fi
@@ -142,8 +137,8 @@ setup_mygpt() {
     if ! grep -Fxq "$ALIAS_DELETE_MYGPT" $HOME/.bashrc; then
         echo $ALIAS_DELETE_MYGPT >> $HOME/.bashrc
     fi
+
     source $HOME/.bashrc
-    spin=0
     echo -e "\033[1;32m[✓] Aliases added and bashrc sourced successfully.\033[0m"
 
     # Step 9: Source bashrc
