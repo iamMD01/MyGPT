@@ -151,7 +151,18 @@ def chat_with_model(model_name='llama3.2:1b', spinner_style='star'):
     """Interactive chat with the specified Ollama model"""
     print(f"{BLUE}🤖 MyGPT - Ollama Terminal Chat{RESET}")
     print(f"Chatting with model: {ORANGE}{model_name}{RESET}")
-    print("Type 'exit' to quit, 'models' to list available models, 'setmodel <model_name>' to change model, 'testmodel' to run speed test")
+    print("""
+    Welcome! Please choose an option:
+    ---------------------------------------
+    | Command              | Description                        |
+    |----------------------|------------------------------------|
+    | exit                 | Quit the application               |
+    | models               | List available models              |
+    | setmodel <model_name>| Change the model to <model_name>   |
+    | testmodel            | Run a speed test on the current model |
+    ---------------------------------------
+    """)
+    
     
     context = []  # Maintain conversation context
     
