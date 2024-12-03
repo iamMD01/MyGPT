@@ -134,7 +134,9 @@ setup_mygpt() {
     echo -e "\033[1;32m🎉 Setup complete! MyGPT is installed in your system. To use it, type 'mygpt'. To delete it, type 'delete mygpt'.\033[0m"
 
     # Move to the home directory after setup
-    cd ~
+    cd $HOME
+    echo -e "\033[1;33m[*] Navigating to Home...\033[0m"
+    sleep 1
 }
 
 # Main script logic
