@@ -105,6 +105,7 @@ def test_ollama_speed(model_name='llama3.2:1b', prompt="Tell me about the world"
     
     avg_tokens_per_sec = sum(tokens_per_sec_list) / len(tokens_per_sec_list)
     
+    
     # Create graphing visualization
     plt.figure(figsize=(15, 5))
     plt.subplot(1, 3, 1)
