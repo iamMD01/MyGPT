@@ -43,7 +43,7 @@ class ProgressSpinner:
 
     def stop(self, final_message=''):
         self.done = True
-        if self.thread:
+        if self.thread:     
             self.thread.join()
         sys.stdout.write('\r' + ' ' * (len(self.message) + 2) + '\r')
         if final_message:
